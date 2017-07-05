@@ -40,7 +40,8 @@ docker run \
 
 echo "setup container build environment..."
 # docker exec --tty $container_name apt-get install -y devscripts build-essential lintian
-docker exec --tty $container_name /bin/bash -c "sudo apt-get install -y build-essential && \
+docker exec --tty $container_name /bin/bash -c "sudo apt-get update && \
+    sudo apt-get install -y build-essential && \
     sudo apt-get install -y libpng-dev && \
     sudo apt-get install -y pkg-config && \
     cd /build && \
@@ -50,5 +51,5 @@ docker exec --tty $container_name /bin/bash -c "sudo apt-get install -y build-es
     ./configure && \
     make && \
     make install && \
-    cp ./libs/libqrencode.so.3 /output/ && \
-    cp ./libs/qrencode /output/"
+    cp ./.libs/libqrencode.so.3 /output/ && \
+    cp ./.libs/qrencode /output/"
