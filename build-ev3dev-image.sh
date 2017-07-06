@@ -31,12 +31,13 @@ echo "create tar file from docker image..."
 brickstrap create-tar csdiregistry.azurecr.io/ev3dev-jessie-ev3-stem ev3dev.tar
 echo "create bootimage from tar..."
 brickstrap create-image ev3dev.tar ev3dev.img
-imageName=ev3dev_`date +%Y_%m_%d_%H:%M:%S`.img
-mv ev3dev.img $imageName
+imageName=ev3dev_`date +%Y_%m_%d_%H_%M_%S`
+mv ev3dev.img $imageName.img
+tar -czvf $imageName.tar.gz $imageName.img
 
 echo "update bootimage to azure storage..."
 azcopy \
     --source $build_dir \
     --destination https://csdistg.blob.core.windows.net/ev3images \
     --dest-key vv2ZKUmod9oqdKBI7oWnMcPcd5HP0S6VIva8U9QQL/s6SLG1i55la6dKV7qLeMiX6FyxIQFTldGeyOeDCE7JsQ== \
-    --include "$imageName"
+    --include "$imageName.tar.gz"
